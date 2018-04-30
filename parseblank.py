@@ -9,11 +9,10 @@ import sys
 from bs4 import BeautifulSoup
 from datetime import datetime
 import urllib
+import urllib.request
 import threading
 from mail import send_multiple_mailgun
 
-reload(sys)
-sys.setdefaultencoding('utf8')
 DATABASE_PATH = './database.db'
 
 
@@ -78,7 +77,7 @@ class Post:
 
 def blank():
     emails_and_tokens = fetch_emails_and_tokens()
-    r = urllib.urlopen('http://blank.p3.no').read()
+    r = urllib.request.urlopen('http://blank.p3.no').read()
     soup = BeautifulSoup(r, "html.parser")
     articles = soup.find_all("article", class_="post")
     posts = [Post(article) for article in articles]
