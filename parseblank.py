@@ -93,8 +93,10 @@ def blank():
 
             send_multiple_mailgun(emails_and_tokens, last.title, last.href, last.time, last.type)
             print("EMAILS SENDT!")
-
-            print(last.__dict__)
+            try:
+                print(last.__dict__)
+            except Exception as e:
+                print(e)
         else:
             print("Allerede sendt: " + last.href)
     threading.Timer(30.0, blank).start()
