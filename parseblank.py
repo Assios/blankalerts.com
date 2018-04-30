@@ -7,7 +7,7 @@ import sqlite3 as sql
 import sys
 
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timedelta
 import urllib
 import urllib.request
 import threading
@@ -67,7 +67,7 @@ class Post:
         self.href = self.link["href"]
         self.original_time = self.link.get_text()
         self.original_time = self.original_time.replace("ø", "o")
-        self.time = datetime.now().strftime("%d.%m.%y kl %H.%M")
+        self.time = datetime.now().strftime("%d.%m.%y kl %H.%M") + timedelta(hours=6)
         self.type = self.get_type(self.article)
         try:
             self.title = ' '.join(self.href.split("/")[-2].split('-')).capitalize()
