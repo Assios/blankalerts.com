@@ -91,43 +91,39 @@ def send():
         duplicate = False
         success = False
 
-        try:
-            email = request.form['email'].lower()
+        email = request.form['email'].lower()
 
-            if validate_email(email):
-                con = sql.connect(DATABASE_PATH)
-                cur = con.cursor()
+        if validate_email(email):
+            con = sql.connect(DATABASE_PATH)
+            cur = con.cursor()
 
-                cur.execute('SELECT * FROM emails')
-                rows = cur.fetchall()
-                emails = [row[0].lower() for row in rows]
+            cur.execute('SELECT * FROM emails')
+            rows = cur.fetchall()
+            emails = [row[0].lower() for row in rows]
 
-                if email in emails:
-                    duplicate = True
-                    msg = "Den eposten er allerede lagt til, din tulling."
-                    color = "#F2A7AD"
-                else:
-                    tok = token()
-                    cur.execute("INSERT INTO emails (email, token) VALUES (?,?)", (email, tok))
-                    con.commit()
-                    msg = "Eposten %s er lagt til!" % email
-                    send_welcome_mail(email, tok)
-                    print("REG")
-                    print(email)
-                    color = "#3B732C"
-                    success = True
+            if email in emails:
+                duplicate = True
+                msg = "Den eposten er allerede lagt til, din tulling."
+                color = "#F2A7AD"
             else:
-                msg = "Ugyldig epost!"
-                color = "#D8000C"
-                ugyldig = True
-        except:
-            con.rollback()
-            msg = "Kunne ikke legge til epost."
+                tok = token()
+                cur.execute("INSERT INTO emails (email, token) VALUES (?,?)", (email, tok))
+                con.commit()
+                msg = "Eposten %s er lagt til!" % email
+                send_welcome_mail(email, tok)
+                print("REG")
+                print(email)
+                color = "#3B732C"
+                success = True
+        else:
+            msg = "Ugyldig epost!"
+            color = "#D8000C"
+            ugyldig = True
 
-        finally:
-            return render_template("index.html", msg=msg, color=color, ugyldig=ugyldig, duplicate=duplicate,
-                                   success=success)
-            con.close()
+
+        return render_template("index.html", msg=msg, color=color, ugyldig=ugyldig, duplicate=duplicate,
+                               success=success)
+        con.close()
 
 
 if __name__ == '__main__':
