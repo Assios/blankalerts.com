@@ -67,7 +67,8 @@ class Post:
         self.href = self.link["href"]
         self.original_time = self.link.get_text()
         self.original_time = self.original_time.replace("ø", "o")
-        self.time = datetime.now().strftime("%d.%m.%y kl %H.%M") + timedelta(hours=6)
+        t = datetime.now() + timedelta(hours=6)
+        self.time = '{:%H:%M:%S}'.format(t)
         self.type = self.get_type(self.article)
         try:
             self.title = ' '.join(self.href.split("/")[-2].split('-')).capitalize()
