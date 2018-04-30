@@ -8,9 +8,9 @@
     <meta name="author" content="">
     <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}">
 
-<meta property="og:url"                content="https://www.skamalerts.com" />
-<meta property="og:title"              content="SKAM ALERTS" />
-<meta property="og:description"        content="Få Skam-oppdateringer på mail og SMS!" />
+<meta property="og:url"                content="https://www.blankalerts.com" />
+<meta property="og:title"              content="BLANKALERTS" />
+<meta property="og:description"        content="Få Blank-oppdateringer på mail!" />
 <meta property="og:image"              content="/static/images/success.png" />
 
 
@@ -79,7 +79,7 @@
           if ( !navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ) return;
 
           jQuery('a[href^="sms:"]').attr('href', function() {
-            return jQuery(this).attr('href').replace('?body=SKAM', '');
+            return jQuery(this).attr('href').replace('?body=BLANK', '');
           });
         })();
     </script>
