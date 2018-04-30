@@ -120,7 +120,8 @@ def send():
                 msg = "Ugyldig epost!"
                 color = "#D8000C"
                 ugyldig = True
-        except:
+        except Exception as e:
+            print(e)
             con.rollback()
             msg = "Kunne ikke legge til epost."
 
